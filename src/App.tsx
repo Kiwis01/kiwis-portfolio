@@ -6,6 +6,7 @@ import  MainSection  from "@/components/ui/MainSection";
 import { ExperienceSection } from "@/components/ui/ExperienceSection";
 import { ProjectsSkillsSection } from "@/components/ui/ProjectsSkillsSection";
 import { ContactSection } from "@/components/ui/ContactSection";
+import { ThemeProvider } from "next-themes";
 
 type Section = "main" | "experience" | "projects" | "contact";
 
@@ -95,33 +96,35 @@ export default function App() {
   };
 
   return (
-    <div className="w-full h-screen overflow-hidden bg-background">
-      <SwipeHandler onSwipe={handleSwipe}>
-        <div className="relative w-full h-full">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentSection}
-              variants={getSlideVariants(currentSection)}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30
-              }}
-              className="absolute inset-0 w-full h-full overflow-auto"
-            >
-              {renderSection(currentSection)}
-            </motion.div>
-          </AnimatePresence>
-          
-          <DirectionalNav 
-            currentSection={currentSection} 
-            onNavigate={handleNavigate}
-          />
-        </div>
-      </SwipeHandler>
-    </div>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <div className="w-full h-screen overflow-hidden bg-background">
+        <SwipeHandler onSwipe={handleSwipe}>
+          <div className="relative w-full h-full">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSection}
+                variants={getSlideVariants(currentSection)}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30
+                }}
+                className="absolute inset-0 w-full h-full overflow-auto"
+              >
+                {renderSection(currentSection)}
+              </motion.div>
+            </AnimatePresence>
+            
+            <DirectionalNav 
+              currentSection={currentSection} 
+              onNavigate={handleNavigate}
+            />
+          </div>
+        </SwipeHandler>
+      </div>
+    </ThemeProvider>
   );
 }
