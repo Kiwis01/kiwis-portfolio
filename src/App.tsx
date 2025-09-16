@@ -8,7 +8,7 @@ import { ProjectsSkillsSection } from "@/components/ui/ProjectsSkillsSection";
 import { ContactSection } from "@/components/ui/ContactSection";
 import { ThemeProvider } from "next-themes";
 
-type Section = "main" | "experience" | "projects" | "contact";
+export type Section = "main" | "experience" | "projects" | "contact";
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState<Section>("main");

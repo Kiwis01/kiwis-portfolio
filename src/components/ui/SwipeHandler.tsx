@@ -68,7 +68,7 @@ export function SwipeHandler({ onSwipe, children }: SwipeHandlerProps) {
         
         // If there's a scroll container, check scroll boundaries
         if (scrollContainer) {
-          const { scrollTop, scrollHeight, clientHeight, scrollLeft, scrollWidth, clientWidth } = scrollContainer;
+          const { scrollTop, scrollHeight, clientHeight, scrollLeft } = scrollContainer;
           
           // Horizontal navigation detection
           if (Math.abs(e.deltaX) > Math.abs(e.deltaY) && Math.abs(e.deltaX) > 30) {

@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowDown, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { Section } from "@/App";
 
 interface DirectionalNavProps {
-  currentSection: string;
-  onNavigate: (section: string) => void;
+  currentSection: Section;
+  onNavigate: (section: Section) => void;
 }
 
 export function DirectionalNav({ currentSection, onNavigate }: DirectionalNavProps) {
-  const navItems = [
+  const navItems: { direction: string; icon: React.ElementType; section: Section; label: string; position: string; }[] = [
     {
       direction: "left",
       icon: ArrowLeft,
