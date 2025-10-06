@@ -2,12 +2,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Code, Palette, Database, Zap } from "lucide-react";
+import irisVideo from '@/assets/iris.mp4';
+import medAI from '@/assets/medAI.mp4';
 
 export function ProjectsSkillsSection() {
   const projects = [
     {
       title: "Healthy",
-      description: "Co-founded a unified healthcare platform for public hospitals in Mexico, featuring AI-powered diagnostics (YOLOv8, MedSAM) and multimodal insights from medical imaging and reports.",
+      description: "Co-founded a unified healthcare platform for public hospitals in Mexico, featuring AI-powered diagnostics (U-Net) and multimodal insights from medical imaging and reports.",
       image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwdGVjaHxlbnwxfHx8fDE3NTc3NDAwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["AI/ML", "YOLOv8", "MedSAM", "MedGemma", "AWS", "HIPAA"],
       demoUrl: "https://heathy.org",
@@ -16,7 +18,7 @@ export function ProjectsSkillsSection() {
     {
         title: "Iris",
         description: "Immersive Anatomy Atlas (XR4Health25, UNESCO & Université de Paris) – Co-developed a 3D immersive human atlas that integrates anatomical slices from the Visible Korean Human dataset into a VR/AR environment. Built interactive exploration tools and an AI-powered multilingual chatbot to enhance anatomy education, bridging traditional cross-sectional imaging with immersive virtual anatomy.",
-        image: "https://images.unsplash.com/photo-1530497610245-92d73c1bcf90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWklMjBhc3Npc3RhbnR8ZW58MXx8fHwxNzU3NzQwMDAwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+        image: irisVideo,
         tags: ["Mixture-of-Agents", "PyTorch", "Roboflow", "React", "Multimodal AI"],
         demoUrl: "#",
         githubUrl: "#"
@@ -24,7 +26,7 @@ export function ProjectsSkillsSection() {
     {
       title: "Medical Assistant for Pre-diagnoses",
       description: "Designed a mixture-of-agents architecture and a multimodal pipeline combining MRI imaging with patient records to provide AI-powered pre-diagnostic support for doctors.",
-      image: "https://images.unsplash.com/photo-1530497610245-92d73c1bcf90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwYWklMjBhc3Npc3RhbnR8ZW58MXx8fHwxNzU3NzQwMDAwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      image: medAI,
       tags: ["Mixture-of-Agents", "PyTorch", "Roboflow", "React", "Multimodal AI"],
       demoUrl: "#",
       githubUrl: "https://github.com/vnguyee/ChmlTech-MedAssist-AI.git"
@@ -108,11 +110,13 @@ export function ProjectsSkillsSection() {
             {projects.map((project, index) => (
               <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="aspect-video overflow-hidden">
-                  {/* <ImageWithFallback
+                  <video
                     src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                  /> */}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 rounded-2xl"
+                    autoPlay
+                    loop
+                    muted
+                  />
                 </div>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg">{project.title}</CardTitle>

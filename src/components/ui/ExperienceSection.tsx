@@ -9,7 +9,7 @@ export function ExperienceSection() {
       position: "Software Engineering Intern",
       location: "Tempe, AZ",
       period: "May 2025 - Aug 2025",
-      description: "Built a pull request agent with a RAG pipeline to analyze code changes, suggest fixes, and detect cross-file impacts. Implemented async pipelines with Amazon SQS to resolve webhook timeouts and deployed a Kafka-based microservice to audit access keys, improving security and CI/CD efficiency.",
+      description: "Deployed a Kafka-based microservice to audit access keys, improving security and CI/CD efficiency. Built a pull request agent with a RAG pipeline to analyze code changes, suggest fixes, and detect cross-file impacts. Implemented async pipelines with Amazon SQS to resolve webhook timeouts.",
       technologies: ["Bitbucket API", "LangChain", "Qdrant", "RAG", "Amazon SQS", "Kafka", "Java", "AWS"],
       current: false
     },
@@ -63,7 +63,7 @@ export function ExperienceSection() {
         </div>
 
         {/* Achievement Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        {/*<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {achievements.map((achievement, index) => (
             <Card key={index} className="text-center">
               <CardContent className="pt-6">
@@ -76,7 +76,7 @@ export function ExperienceSection() {
               </CardContent>
             </Card>
           ))}
-        </div>
+        </div>*/}
 
         {/* Experience Timeline */}
         <div className="space-y-6">
