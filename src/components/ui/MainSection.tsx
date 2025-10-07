@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Download, Github, Linkedin, Mail, Search, Mic, Camera, Send, X } from "lucide-react"
+import { Download, Search, Mic, Send, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import resumePdf from '@/assets/Carlos_Quihuis_SWE.pdf';
 import { useState, useRef, useEffect } from "react";

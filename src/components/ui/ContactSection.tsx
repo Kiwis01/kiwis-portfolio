@@ -59,6 +59,11 @@ export function ContactSection() {
       icon: Linkedin,
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/carlos-quihuis-190b431aa/"
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      href: "mailto:carlos.quihuis.dev@gmail.com"
     }
   ];
 

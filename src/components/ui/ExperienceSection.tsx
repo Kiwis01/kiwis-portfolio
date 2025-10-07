@@ -33,24 +33,24 @@ export function ExperienceSection() {
     }
   ];
 
-  const achievements = [
-    {
-      metric: "5+",
-      label: "Years of Experience"
-    },
-    {
-      metric: "60%",
-      label: "Lower Latency"
-    },
-    {
-      metric: "88.9%",
-      label: "AI Model Accuracy"
-    },
-    {
-      metric: "10+",
-      label: "Projects Deployed"
-    }
-  ];
+  // const achievements = [
+  //   {
+  //     metric: "5+",
+  //     label: "Years of Experience"
+  //   },
+  //   {
+  //     metric: "60%",
+  //     label: "Lower Latency"
+  //   },
+  //   {
+  //     metric: "88.9%",
+  //     label: "AI Model Accuracy"
+  //   },
+  //   {
+  //     metric: "10+",
+  //     label: "Projects Deployed"
+  //   }
+  // ];
 
   return (
     <section id="experience" className="py-16 md:py-24 bg-background">
