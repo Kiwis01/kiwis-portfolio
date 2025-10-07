@@ -1,9 +1,67 @@
 import { Button } from "@/components/ui/button"
-import { Download, Github, Linkedin, Mail } from "lucide-react"
+import { Download, Github, Linkedin, Mail, Search, Mic, Camera, Send, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import resumePdf from '@/assets/Carlos_Quihuis_SWE.pdf';
+import { useState, useRef, useEffect } from "react";
 
-function MainSection() {
+interface MainSectionProps {
+  onConversationToggle?: (isOpen: boolean) => void;
+}
+
+function MainSection({ onConversationToggle }: MainSectionProps) {
+  const [prompt, setPrompt] = useState("");
+  const [showConversation, setShowConversation] = useState(false);
+  const [conversation, setConversation] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
+  const conversationRef = useRef<HTMLDivElement>(null);
+  
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!prompt.trim()) return;
+    
+    // Add user message to conversation
+    const userMessage = { role: 'user' as const, content: prompt };
+    
+    // Simple mock response - in a real app, this would come from an API
+    const assistantResponse = { 
+      role: 'assistant' as const, 
+      content: `Thanks for your message: "${prompt}". This is a demo response. In a real application, this would be connected to an AI API.` 
+    };
+    
+    setConversation([...conversation, userMessage, assistantResponse]);
+    setShowConversation(true);
+    setPrompt("");
+  };
+
+  // Prevent background scrolling when conversation is open
+  useEffect(() => {
+    onConversationToggle?.(showConversation);
+    if (showConversation) {
+      // Prevent all scrolling on the body
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = '0';
+    } else {
+      // Restore scrolling
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+    }
+
+    return () => {
+      // Cleanup
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+    };
+  }, [showConversation, onConversationToggle]);
+  
+  const closeConversation = () => {
+    setShowConversation(false);
+  };
+  
   return (
       <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20 py-12">
       <div className="container mx-auto px-4 text-center">
@@ -24,6 +82,117 @@ function MainSection() {
             I build intelligent web applications by merging high-performance backends with intuitive UIs and cutting-edge AI.
           </p>
           
+          {/* Gemini-style Prompt Bar */}
+          <div className="max-w-2xl mx-auto mb-10">
+            <form onSubmit={handleSubmit} className="flex items-center bg-background border border-input/10 rounded-full shadow-sm hover:shadow-md transition-shadow px-4 py-2">
+              <Search className="w-5 h-5 text-muted-foreground mr-2" />
+              <input
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Ask me anything..."
+                className="flex-1 bg-transparent border-none focus:outline-none text-foreground placeholder:text-muted-foreground"
+                onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+              />
+              <div className="flex gap-2 ml-2">
+                <button type="button" className="p-2 rounded-full hover:bg-secondary/50 transition-colors">
+                  <Mic className="w-5 h-5 text-muted-foreground" />
+                </button>
+                {/* <button type="button" className="p-2 rounded-full hover:bg-secondary/50 transition-colors">
+                  <Camera className="w-5 h-5 text-muted-foreground" />
+                </button> */}
+                <button 
+                  type="submit" 
+                  className="p-2 rounded-full hover:bg-primary/90 bg-primary transition-colors"
+                >
+                  <Send className="w-5 h-5 text-primary-foreground" />
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Conversation Overlay */}
+          {showConversation && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              {/* Semi-transparent backdrop */}
+              <div 
+                className="absolute inset-0 bg-background/80 backdrop-blur-sm" 
+                onClick={closeConversation}
+                onTouchMove={(e) => e.preventDefault()}
+                onWheel={(e) => e.preventDefault()}
+                style={{ position: 'fixed', touchAction: 'none' }}
+              ></div>
+    
+    {/* Conversation box with fixed height */}
+    <div 
+      className="relative bg-background border border-border rounded-xl shadow-lg w-full max-w-4xl h-[70vh] z-10 flex flex-col m-4"
+      onClick={(e) => e.stopPropagation()} // Prevent clicks from closing the modal
+      style={{ position: 'fixed', maxHeight: '70vh' }} // Ensure it stays fixed
+    >
+      {/* Header */}
+      <div className="flex justify-between items-center p-4 border-b border-border">
+        <h3 className="text-lg font-medium">AI Assistant</h3>
+        <button 
+          onClick={closeConversation}
+          className="p-1 rounded-full hover:bg-secondary/50 transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+      
+      {/* Conversation content - fixed height with scrolling */}
+        <div 
+          ref={conversationRef}
+          className="flex-1 overflow-y-auto p-6 space-y-4"
+          style={{ overflowY: 'auto', height: 'calc(100% - 130px)', touchAction: 'pan-y' }} // Explicit height calculation
+        >
+          {conversation.length === 0 ? (
+            <div className="flex items-center justify-center h-full text-muted-foreground">
+              <p>Start a conversation by typing a message below.</p>
+            </div>
+          ) : (
+            conversation.map((message, index) => (
+              <div 
+                key={index} 
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div 
+                  className={`max-w-[80%] p-4 rounded-lg ${
+                    message.role === 'user' 
+                      ? 'bg-primary text-primary-foreground rounded-tr-none' 
+                      : 'bg-secondary text-secondary-foreground rounded-tl-none'
+                  }`}
+                >
+                  {message.content}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        
+        {/* Input area */}
+        <div className="p-4 border-t border-border">
+          <form onSubmit={handleSubmit} className="flex items-center gap-2">
+            <input
+              type="text"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Type a message..."
+              className="flex-1 bg-secondary/30 border border-input rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <button 
+              type="submit" 
+              className="p-2 rounded-full bg-primary hover:bg-primary/90 transition-colors"
+            >
+              <Send className="w-5 h-5 text-primary-foreground" />
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  )}
+
+          {/* Download CV button */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <a href={resumePdf} download="Carlos_Quihuis_SWE.pdf">
               <Button variant="outline" size="lg" className="cursor-pointer">
@@ -33,7 +202,7 @@ function MainSection() {
             </a>
           </div>
           
-          <div className="flex justify-center space-x-6 mb-8">
+          {/* <div className="flex justify-center space-x-6 mb-8">
             <a 
               href="https://github.com/Kiwis01" 
               target="_blank" 
@@ -56,14 +225,14 @@ function MainSection() {
             >
               <Mail className="w-6 h-6" />
             </a>
-          </div>
+          </div> */}
 
           {/* About section integrated */}
-          <div className="max-w-2xl mx-auto">
+          {/* <div className="max-w-2xl mx-auto">
             <p className="text-lg text-muted-foreground">
               With 5+ years of experience at the intersection of full-stack development and AI, I am passionate about building scalable, high-impact solutions that solve real-world problems. I thrive on complex challenges and am driven to use technology to make a meaningful difference.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

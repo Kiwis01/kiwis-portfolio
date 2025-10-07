@@ -12,6 +12,7 @@ export type Section = "main" | "experience" | "projects" | "contact";
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState<Section>("main");
+  const [isConversationOpen, setIsConversationOpen] = useState(false);
 
   const handleSwipe = (direction: "left" | "right" | "up" | "down") => {
     switch (direction) {
@@ -32,6 +33,7 @@ export default function App() {
         }
         break;
       case "down":
+        if (isConversationOpen) return;
         if (currentSection === "main") {
           setCurrentSection("contact");
         }
@@ -83,7 +85,7 @@ export default function App() {
   const renderSection = (section: Section) => {
     switch (section) {
       case "main":
-        return <MainSection />;
+        return <MainSection onConversationToggle={setIsConversationOpen} />;
       case "experience":
         return <ExperienceSection />;
       case "projects":
@@ -98,7 +100,7 @@ export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <div className="w-full h-screen overflow-hidden bg-background">
-        <SwipeHandler onSwipe={handleSwipe}>
+        <SwipeHandler onSwipe={handleSwipe} disabled={isConversationOpen}>
           <div className="relative w-full h-full">
             <AnimatePresence mode="wait">
               <motion.div

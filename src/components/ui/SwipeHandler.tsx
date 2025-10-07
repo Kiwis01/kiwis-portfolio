@@ -3,9 +3,10 @@ import { useEffect, useRef } from "react";
 interface SwipeHandlerProps {
   onSwipe: (direction: "left" | "right" | "up" | "down") => void;
   children: React.ReactNode;
+  disabled?: boolean;
 }
 
-export function SwipeHandler({ onSwipe, children }: SwipeHandlerProps) {
+export function SwipeHandler({ onSwipe, children, disabled = false }: SwipeHandlerProps) {
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isCoolingDown = useRef(false);
@@ -20,7 +21,7 @@ export function SwipeHandler({ onSwipe, children }: SwipeHandlerProps) {
     const TRACKPAD_THRESHOLD = 100;
 
     const handleSwipeWithCooldown = (direction: "left" | "right" | "up" | "down") => {
-      if (isCoolingDown.current) return;
+      if (isCoolingDown.current || disabled) return;
       onSwipe(direction);
       isCoolingDown.current = true;
       setTimeout(() => {
