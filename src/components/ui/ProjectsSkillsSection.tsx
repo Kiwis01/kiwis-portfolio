@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Code, Palette, Database, Zap } from "lucide-react";
 import irisVideo from '@/assets/iris.mp4';
-import medAI from '@/assets/medAI.mp4';
+import medAI from '@/assets/medAi.mp4';
 
 export function ProjectsSkillsSection() {
   const projects = [
