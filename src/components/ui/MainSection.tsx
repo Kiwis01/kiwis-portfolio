@@ -3,6 +3,7 @@ import { Download, Search, Mic, Send, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import resumePdf from '@/assets/Carlos_Quihuis_SWE.pdf';
 import { useState, useRef, useEffect } from "react";
+import GeminiChat from '@/lib/gemini';
 
 interface MainSectionProps {
   onConversationToggle?: (isOpen: boolean) => void;
@@ -11,38 +12,62 @@ interface MainSectionProps {
 function MainSection({ onConversationToggle }: MainSectionProps) {
   const [prompt, setPrompt] = useState("");
   const [showConversation, setShowConversation] = useState(false);
-  const [conversation, setConversation] = useState<{role: 'user' | 'assistant', content: string}[]>([]);
+  const [conversation, setConversation] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
+  const [isThinking, setIsThinking] = useState(false);
   const conversationRef = useRef<HTMLDivElement>(null);
-  
-  const handleSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!prompt.trim()) return;
-    
-    // Add user message to conversation
-    const userMessage = { role: 'user' as const, content: prompt };
-    
-    // Simple mock response - in a real app, this would come from an API
-    const assistantResponse = { 
-      role: 'assistant' as const, 
-      content: `Thanks for your message: "${prompt}". This is a demo response. In a real application, this would be connected to an AI API.` 
+  const chatRef = useRef<GeminiChat | null>(null);
+
+  useEffect(() => {
+    const initializeChat = async () => {
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (!apiKey) {
+        console.error("VITE_GEMINI_API_KEY is not set.");
+        return;
+      }
+      const chat = new GeminiChat(apiKey);
+      await chat.init();
+      chatRef.current = chat;
     };
-    
-    setConversation([...conversation, userMessage, assistantResponse]);
+    initializeChat();
+  }, []);
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!prompt.trim() || !chatRef.current || isThinking) return;
+
+    const userMessage = { role: 'user' as const, content: prompt };
+    setConversation(prev => [...prev, userMessage]);
     setShowConversation(true);
+    setIsThinking(true);
     setPrompt("");
+
+    try {
+      const reply = await chatRef.current.sendMessage(prompt);
+      const assistantMessage = { role: 'assistant' as const, content: reply };
+      setConversation(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      const errorMessage = { role: 'assistant' as const, content: "Sorry, I ran into an error. Please try again." };
+      setConversation(prev => [...prev, errorMessage]);
+    } finally {
+      setIsThinking(false);
+    }
   };
 
-  // Prevent background scrolling when conversation is open
+  useEffect(() => {
+    if (conversationRef.current) {
+      conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
+    }
+  }, [conversation, isThinking]);
+
   useEffect(() => {
     onConversationToggle?.(showConversation);
     if (showConversation) {
-      // Prevent all scrolling on the body
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
       document.body.style.top = '0';
     } else {
-      // Restore scrolling
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
@@ -50,20 +75,19 @@ function MainSection({ onConversationToggle }: MainSectionProps) {
     }
 
     return () => {
-      // Cleanup
       document.body.style.overflow = '';
       document.body.style.position = '';
       document.body.style.width = '';
       document.body.style.top = '';
     };
   }, [showConversation, onConversationToggle]);
-  
+
   const closeConversation = () => {
     setShowConversation(false);
   };
-  
+
   return (
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20 py-12">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20 py-12">
       <div className="container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto pb-20">
         
@@ -146,27 +170,37 @@ function MainSection({ onConversationToggle }: MainSectionProps) {
           className="flex-1 overflow-y-auto p-6 space-y-4"
           style={{ overflowY: 'auto', height: 'calc(100% - 130px)', touchAction: 'pan-y' }} // Explicit height calculation
         >
-          {conversation.length === 0 ? (
+          {conversation.map((message, index) => (
+            <div 
+              key={index} 
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div 
+                className={`max-w-[80%] p-4 rounded-lg ${
+                  message.role === 'user' 
+                    ? 'bg-primary text-primary-foreground rounded-tr-none' 
+                    : 'bg-secondary text-secondary-foreground rounded-tl-none'
+                  }`}
+              >
+                {message.content}
+              </div>
+            </div>
+          ))}
+          {isThinking && (
+            <div className="flex justify-start">
+              <div className="max-w-[80%] p-4 rounded-lg bg-secondary text-secondary-foreground rounded-tl-none">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0.2s]"></div>
+                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:0.4s]"></div>
+                </div>
+              </div>
+            </div>
+          )}
+          {conversation.length === 0 && !isThinking && (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <p>Start a conversation by typing a message below.</p>
             </div>
-          ) : (
-            conversation.map((message, index) => (
-              <div 
-                key={index} 
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div 
-                  className={`max-w-[80%] p-4 rounded-lg ${
-                    message.role === 'user' 
-                      ? 'bg-primary text-primary-foreground rounded-tr-none' 
-                      : 'bg-secondary text-secondary-foreground rounded-tl-none'
-                  }`}
-                >
-                  {message.content}
-                </div>
-              </div>
-            ))
           )}
         </div>
         
