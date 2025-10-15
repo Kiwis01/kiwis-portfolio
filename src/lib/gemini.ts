@@ -26,7 +26,6 @@ class GeminiChat {
     });
 
     this.initialized = true;
-    console.log("gemini.ts: Chat initialized!");
   }
 
   // Send a message and get a response
