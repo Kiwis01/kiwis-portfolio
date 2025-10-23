@@ -19,13 +19,7 @@ function MainSection({ onConversationToggle }: MainSectionProps) {
 
   useEffect(() => {
     const initializeChat = async () => {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (!apiKey) {
-        console.error("VITE_GEMINI_API_KEY is not set.");
-        return;
-      }
-      const chat = new GeminiChat(apiKey);
-      await chat.init();
+      const chat = new GeminiChat();
       chatRef.current = chat;
     };
     initializeChat();
