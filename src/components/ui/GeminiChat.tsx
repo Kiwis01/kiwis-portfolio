@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Mic, Plus, Image as ImageIcon, X, Sparkles, MessageSquare } from "lucide-react";
+import { Send, Mic, X, Sparkles, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import GeminiChatService from '@/lib/gemini';
 
@@ -72,10 +72,10 @@ export function GeminiChat({ isOpen, onClose, initialPrompt = "" }: GeminiChatPr
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        handleSend(prompt);
-    };
+    // const handleSubmit = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     handleSend(prompt);
+    // };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && !e.shiftKey) {
