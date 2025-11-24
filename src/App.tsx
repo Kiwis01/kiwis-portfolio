@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SwipeHandler } from "@/components/ui/SwipeHandler";
 import { DirectionalNav } from "@/components/ui/DirectionalNav";
-import  MainSection  from "@/components/ui/MainSection";
+import MainSection from "@/components/ui/MainSection";
 import { ExperienceSection } from "@/components/ui/ExperienceSection";
 import { ProjectsSkillsSection } from "@/components/ui/ProjectsSkillsSection";
 import { ContactSection } from "@/components/ui/ContactSection";
@@ -59,8 +59,8 @@ export default function App() {
       main: {
         initial: { x: 0, y: 0, opacity: 0 },
         animate: { x: 0, y: 0, opacity: 1 },
-        exit: { 
-          opacity: 0 
+        exit: {
+          opacity: 0
         }
       },
       experience: {
@@ -119,11 +119,13 @@ export default function App() {
                 {renderSection(currentSection)}
               </motion.div>
             </AnimatePresence>
-            
-            <DirectionalNav 
-              currentSection={currentSection} 
-              onNavigate={handleNavigate}
-            />
+
+            {!isConversationOpen && (
+              <DirectionalNav
+                currentSection={currentSection}
+                onNavigate={handleNavigate}
+              />
+            )}
           </div>
         </SwipeHandler>
       </div>
