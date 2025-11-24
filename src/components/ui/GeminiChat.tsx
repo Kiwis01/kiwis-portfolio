@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Send, Mic, X, Sparkles, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import GeminiChatService from '@/lib/gemini';
+import ReactMarkdown from 'react-markdown';
 
 interface GeminiChatProps {
     isOpen: boolean;
@@ -158,8 +159,25 @@ export function GeminiChat({ isOpen, onClose, initialPrompt = "" }: GeminiChatPr
                                             )}
 
                                             <div className={`max-w-[85%] md:max-w-[75%] ${msg.role === 'user' ? 'bg-[#282A2C] rounded-2xl rounded-tr-sm px-5 py-3' : 'text-[#E3E3E3] pt-1'}`}>
-                                                <div className="prose prose-invert max-w-none text-[15px] md:text-[16px] leading-relaxed whitespace-pre-wrap">
-                                                    {msg.content}
+                                                <div className="text-[15px] md:text-[16px] leading-relaxed text-left">
+                                                    {msg.role === 'user' ? (
+                                                        <div className="whitespace-pre-wrap">{msg.content}</div>
+                                                    ) : (
+                                                        <div className="space-y-4">
+                                                            <ReactMarkdown
+                                                                components={{
+                                                                    p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                                                                    ul: ({ node, ...props }) => <ul className="list-disc list-outside ml-4 mb-2 space-y-1" {...props} />,
+                                                                    ol: ({ node, ...props }) => <ol className="list-decimal list-outside ml-4 mb-2 space-y-1" {...props} />,
+                                                                    li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+                                                                    strong: ({ node, ...props }) => <span className="font-semibold text-white" {...props} />,
+                                                                    a: ({ node, ...props }) => <a className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                                                                }}
+                                                            >
+                                                                {msg.content}
+                                                            </ReactMarkdown>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

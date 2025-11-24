@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarDays, MapPin, Briefcase } from "lucide-react";
+import { CalendarDays, MapPin, Briefcase, HeartPulse, Zap, Cloud, ShieldCheck, BookOpen } from "lucide-react";
 
 export function ExperienceSection() {
   const experiences = [
@@ -9,48 +9,59 @@ export function ExperienceSection() {
       position: "Software Engineering Intern",
       location: "Tempe, AZ",
       period: "May 2025 - Aug 2025",
-      description: "Deployed a Kafka-based microservice to audit access keys, improving security and CI/CD efficiency. Built a pull request agent with a RAG pipeline to analyze code changes, suggest fixes, and detect cross-file impacts. Implemented async pipelines with Amazon SQS to resolve webhook timeouts.",
-      technologies: ["Bitbucket API", "LangChain", "Qdrant", "RAG", "Amazon SQS", "Kafka", "Java", "AWS"],
-      current: false
+      description: `Built a pull request agent with <strong>Python, AWS Lambda, LangChain, and Qdrant</strong> to analyze code changes and suggest inline fixes in seconds. Added a <strong>FastAPI RAG pipeline</strong> to detect cross-file impacts and boost accuracy. Implemented <strong>Amazon SQS async pipelines</strong> to eliminate webhook timeouts and <strong>speed up CI/CD by ~30s</strong>. Deployed a Kafka-based auditing microservice in Java on AWS, uncovering <strong>62 orphaned access policies</strong> and improving security compliance. Led incident response during Cognito credential changes, preventing downtime.`,
+      technologies: [
+        "Python",
+        "Java",
+        "AWS",
+        "Lambda",
+        "Bitbucket API",
+        "LangChain",
+        "Qdrant",
+        "RAG",
+        "FastAPI",
+        "Amazon SQS",
+        "Kafka"
+      ],
+      current: false,
     },
     {
       company: "City of Phoenix",
       position: "Software Engineering Intern",
       location: "Phoenix, AZ",
       period: "Sep 2024 - Apr 2025",
-      description: "Optimized SQL queries and restructured database schemas to reduce asset lookup times by over 99.9%. Consolidated 200+ documentation resources into a unified system, significantly improving data retrieval efficiency.",
-      technologies: ["SQL", "Database Optimization", "Indexing", "Documentation Management"],
-      current: false
+      description: `Optimized SQL queries and redesigned schemas with <strong>Python, SQLAlchemy, and Alembic</strong>, cutting asset lookup times from minutes to <strong>under five seconds</strong> during a citywide migration. Improved indexing and workflows to <strong>triple asset identification output</strong>. Unified 200+ documentation resources into a single linked system, reducing retrieval from hours to <strong>under a minute</strong>.`,
+      technologies: [
+        "Python",
+        "SQL",
+        "SQLAlchemy",
+        "Alembic",
+        "Database Optimization",
+        "Indexing",
+        "Documentation Management"
+      ],
+      current: false,
     },
     {
       company: "Healthy",
-      position: "AI Engineer & CTO",
+      position: "Full-stack AI Engineer",
       location: "Hermosillo, Mexico",
       period: "Jun 2023 - Present",
-      description: "Co-founded and led the development of a unified healthcare platform with AI-powered diagnostics. Integrated computer vision (YOLOv8, MedSAM) and NLP (MedGemma) models to achieve 88.9% accuracy in tumor detection and multimodal analysis.",
-      technologies: ["AI/ML", "YOLOv8", "MedSAM", "MONAI", "MedGemma", "AWS", "HIPAA"],
-      current: true
-    }
+      description: `Built a unified healthcare platform used across public hospitals in Hermosillo, centralizing patient records, labs, and imaging through a <strong>Python backend and React + TS frontend</strong>. Integrated AI models (U-Net + OpenAI API) for tumor detection and segmentation, reaching <strong>88.9% accuracy</strong>. Combined imaging data with LLM reports for multimodal diagnostics. Deployed on AWS with <strong>HIPAA-aligned architecture</strong> and CI/CD pipelines. Completed <strong>42,000+ pilot tests</strong> with physicians to refine workflows and accuracy.`,
+      technologies: [
+        "Python",
+        "React",
+        "TypeScript",
+        "U-Net",
+        "OpenAI API",
+        "AI/ML",
+        "AWS",
+        "HIPAA",
+        "Medical Imaging"
+      ],
+      current: true,
+    },
   ];
-
-  // const achievements = [
-  //   {
-  //     metric: "5+",
-  //     label: "Years of Experience"
-  //   },
-  //   {
-  //     metric: "60%",
-  //     label: "Lower Latency"
-  //   },
-  //   {
-  //     metric: "88.9%",
-  //     label: "AI Model Accuracy"
-  //   },
-  //   {
-  //     metric: "10+",
-  //     label: "Projects Deployed"
-  //   }
-  // ];
 
   return (
     <section id="experience" className="py-16 md:py-24 bg-background">
@@ -62,27 +73,11 @@ export function ExperienceSection() {
           </p>
         </div>
 
-        {/* Achievement Stats */}
-        {/*<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          {achievements.map((achievement, index) => (
-            <Card key={index} className="text-center">
-              <CardContent className="pt-6">
-                <div className="text-2xl md:text-3xl text-primary mb-2">
-                  {achievement.metric}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {achievement.label}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>*/}
-
         {/* Experience Timeline */}
         <div className="space-y-6">
           {experiences.map((exp, index) => (
-            <Card 
-              key={index} 
+            <Card
+              key={index}
               className={`hover:shadow-lg transition-shadow ${exp.current ? 'ring-2 ring-primary' : ''}`}
             >
               <CardHeader>
@@ -116,7 +111,7 @@ export function ExperienceSection() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground mb-4 leading-relaxed">{exp.description}</p>
+                <div className="text-muted-foreground mb-4 leading-relaxed [&_strong]:bg-gradient-to-r [&_strong]:from-[#4285F4] [&_strong]:via-[#9B72CB] [&_strong]:to-[#D96570] [&_strong]:bg-clip-text [&_strong]:text-transparent [&_strong]:font-bold" dangerouslySetInnerHTML={{ __html: exp.description }} />
                 <div className="flex flex-wrap gap-2">
                   {exp.technologies.map((tech, techIndex) => (
                     <Badge key={techIndex} variant="secondary" className="text-xs">
@@ -130,18 +125,45 @@ export function ExperienceSection() {
         </div>
 
         {/* Career Summary */}
-        <Card className="mt-12">
-          <CardHeader>
-            <CardTitle>Career Highlights</CardTitle>
+        <Card className="mt-12 border-none bg-transparent shadow-none">
+          <CardHeader className="px-0">
+            <CardTitle className="text-3xl mb-4">Career Highlights</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>• Led development of a healthcare platform with AI-powered diagnostics from concept to pilot deployment.</li>
-              <li>• Engineered high-impact solutions, including a PR agent that cuts code review time and a 7000x database optimization.</li>
-              <li>• Designed and deployed scalable, secure systems on AWS using microservices, async pipelines, and IaC.</li>
-              <li>• Proven ability to lead incident response, implement security measures, and ensure system reliability.</li>
-              <li>• Co-authored a publication on XR for medical education, presented at an international conference.</li>
-            </ul>
+          <CardContent className="px-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                {
+                  icon: <HeartPulse className="w-6 h-6 text-red-400" />,
+                  text: "Led development of a <strong>healthcare platform</strong> with <strong>AI-powered diagnostics</strong> from concept to pilot deployment."
+                },
+                {
+                  icon: <Zap className="w-6 h-6 text-yellow-400" />,
+                  text: "Engineered high-impact solutions: a <strong>PR agent</strong> cutting review time & <strong>7000x database optimization</strong>."
+                },
+                {
+                  icon: <Cloud className="w-6 h-6 text-blue-400" />,
+                  text: "Designed <strong>scalable AWS systems</strong> using microservices, async pipelines, and IaC."
+                },
+                {
+                  icon: <ShieldCheck className="w-6 h-6 text-green-400" />,
+                  text: "Led <strong>incident response</strong>, implemented security measures, and ensured <strong>system reliability</strong>."
+                },
+                {
+                  icon: <BookOpen className="w-6 h-6 text-purple-400" />,
+                  text: "Co-authored a <strong>publication on XR</strong> for medical education, presented at an international conference."
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-card border hover:border-primary/50 transition-colors group">
+                  <div className="p-2 rounded-lg bg-secondary group-hover:bg-secondary/80 transition-colors">
+                    {item.icon}
+                  </div>
+                  <p
+                    className="text-muted-foreground leading-relaxed [&_strong]:text-foreground [&_strong]:font-semibold"
+                    dangerouslySetInnerHTML={{ __html: item.text }}
+                  />
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
