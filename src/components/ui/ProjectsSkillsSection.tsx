@@ -1,7 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Github, Code, Database, Zap, Terminal, Layout, Brain, Cpu, BookOpen } from "lucide-react";
+import { ExternalLink, Github, Code, Database, Terminal, Layout, Brain, BookOpen } from "lucide-react";
 import irisVideo from '@/assets/iris.mp4';
 import medAI from '@/assets/medAi.mp4';
 
