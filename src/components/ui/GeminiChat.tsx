@@ -150,9 +150,11 @@ export function GeminiChat({ isOpen, onClose, initialPrompt = "" }: GeminiChatPr
                                     {conversation.map((msg, idx) => (
                                         <div key={idx} className={`flex gap-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                             {msg.role === 'assistant' && (
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#4285F4] to-[#D96570] flex items-center justify-center flex-shrink-0 mt-1">
-                                                    <Sparkles className="w-5 h-5 text-white" />
-                                                </div>
+                                                <img
+                                                    src="/yo.jpg"
+                                                    alt="Carlos"
+                                                    className="w-8 h-8 rounded-full object-cover mt-1 border border-white/10"
+                                                />
                                             )}
 
                                             <div className={`max-w-[85%] md:max-w-[75%] ${msg.role === 'user' ? 'bg-[#282A2C] rounded-2xl rounded-tr-sm px-5 py-3' : 'text-[#E3E3E3] pt-1'}`}>
@@ -165,9 +167,11 @@ export function GeminiChat({ isOpen, onClose, initialPrompt = "" }: GeminiChatPr
 
                                     {isThinking && (
                                         <div className="flex gap-4">
-                                            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#4285F4] to-[#D96570] flex items-center justify-center flex-shrink-0 mt-1 animate-pulse">
-                                                <Sparkles className="w-5 h-5 text-white" />
-                                            </div>
+                                            <img
+                                                src="/yo.jpg"
+                                                alt="Carlos"
+                                                className="w-8 h-8 rounded-full object-cover mt-1 border border-white/10 animate-pulse"
+                                            />
                                             <div className="flex items-center gap-1 pt-3">
                                                 <div className="w-2 h-2 bg-[#E3E3E3]/50 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
                                                 <div className="w-2 h-2 bg-[#E3E3E3]/50 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
