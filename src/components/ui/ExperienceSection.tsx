@@ -111,7 +111,18 @@ export function ExperienceSection() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="text-muted-foreground mb-4 leading-relaxed [&_strong]:bg-gradient-to-r [&_strong]:from-[#4285F4] [&_strong]:via-[#9B72CB] [&_strong]:to-[#D96570] [&_strong]:bg-clip-text [&_strong]:text-transparent [&_strong]:font-bold" dangerouslySetInnerHTML={{ __html: exp.description }} />
+                <style>{`
+                  .fixed-gradient-highlight strong {
+                    background: linear-gradient(180deg, #4285F4 0%, #9B72CB 50%, #D96570 100%);
+                    background-attachment: fixed;
+                    background-size: 100% 100vh;
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    color: transparent;
+                    font-weight: bold;
+                  }
+                `}</style>
+                <div className="text-muted-foreground mb-4 leading-relaxed fixed-gradient-highlight" dangerouslySetInnerHTML={{ __html: exp.description }} />
                 <div className="flex flex-wrap gap-2">
                   {exp.technologies.map((tech, techIndex) => (
                     <Badge key={techIndex} variant="secondary" className="text-xs">
