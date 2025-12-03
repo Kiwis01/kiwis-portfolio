@@ -5,6 +5,24 @@ import { CalendarDays, MapPin, Briefcase, HeartPulse, Zap, Cloud, ShieldCheck, B
 export function ExperienceSection() {
   const experiences = [
     {
+      company: "Wise Project LLC",
+      position: "Software Developer",
+      location: "Los Angeles, CA",
+      period: "Oct 2025 - Present",
+      description: `Built the company’s full property management platform using <strong>React and TypeScript</strong>, digitizing listings and tenant workflows to cut manual processing by <strong>~80%</strong>. Developed an <strong>AI tenant assistant</strong> with <strong>Gemini + RAG</strong> to deliver accurate property Q&A and auto-prequalify applicants, reducing repetitive support calls. Implemented a <strong>Python/Django + Stripe</strong> backend to automate recurring rent payments and reduce billing errors. Created a <strong>React Native mobile app</strong> for tenants to pay rent and submit maintenance requests, eliminating intermediary steps and improving response times.`,
+      technologies: [
+        "Python",
+        "React",
+        "TypeScript",
+        "Qdrant",
+        "RAG",
+        "FastAPI",
+        "Django",
+        "PostgreSQL"
+      ],
+      current: true,
+    },
+    {
       company: "University of Phoenix",
       position: "Software Engineering Intern",
       location: "Tempe, AZ",
@@ -41,25 +59,6 @@ export function ExperienceSection() {
         "Documentation Management"
       ],
       current: false,
-    },
-    {
-      company: "Healthy",
-      position: "Full-stack AI Engineer",
-      location: "Hermosillo, Mexico",
-      period: "Jun 2023 - Present",
-      description: `Built a unified healthcare platform used across public hospitals in Hermosillo, centralizing patient records, labs, and imaging through a <strong>Python backend and React + TS frontend</strong>. Integrated AI models (U-Net + OpenAI API) for tumor detection and segmentation, reaching <strong>88.9% accuracy</strong>. Combined imaging data with LLM reports for multimodal diagnostics. Deployed on AWS with <strong>HIPAA-aligned architecture</strong> and CI/CD pipelines. Completed <strong>42,000+ pilot tests</strong> with physicians to refine workflows and accuracy.`,
-      technologies: [
-        "Python",
-        "React",
-        "TypeScript",
-        "U-Net",
-        "OpenAI API",
-        "AI/ML",
-        "AWS",
-        "HIPAA",
-        "Medical Imaging"
-      ],
-      current: true,
     },
   ];
 

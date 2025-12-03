@@ -12,7 +12,7 @@ export function ProjectsSkillsSection() {
       description: "Co-founded a unified healthcare platform for public hospitals in Mexico, featuring AI-powered diagnostics (U-Net) and multimodal insights from medical imaging and reports.",
       media: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGhjYXJlJTIwdGVjaHxlbnwxfHx8fDE3NTc3NDAwMDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
       mediaType: "image",
-      tags: ["AI/ML", "YOLOv8", "MedSAM", "MedGemma", "AWS", "HIPAA"],
+      tags: ["AI/ML", "Python", "React", "TypeScript", "U-Net", "OpenAI API", "AWS", "HIPAA", "Medical Imaging"],
       demoUrl: "https://heathy.org",
       githubUrl: "#"
     },
@@ -32,7 +32,7 @@ export function ProjectsSkillsSection() {
       mediaType: "video",
       tags: ["Mixture-of-Agents", "PyTorch", "Roboflow", "React", "Multimodal AI"],
       demoUrl: "#",
-      githubUrl: "https://github.com/vnguyee/ChmlTech-MedAssist-AI.git"
+      githubUrl: "https://github.com/Kiwis01/Medical-Assistant-AI"
     },
     {
       title: "Pull Request Agent",
